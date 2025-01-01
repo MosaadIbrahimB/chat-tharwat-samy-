@@ -1,14 +1,15 @@
-import 'package:chat/model/text_model.dart';
+import 'package:chat/feature/login/presentation/widget/text_widget.dart';
 import 'package:flutter/material.dart';
 
-class BttnModel extends StatelessWidget {
+class BtnWidget extends StatelessWidget {
   String text;
-  BttnModel({this.text = ''});
+ final VoidCallback ?onTap;
+  BtnWidget({super.key, this.text = '',  this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){print('object');},
+      onTap:onTap,
       child: Container(
         height: 50,
         decoration: BoxDecoration(
@@ -19,7 +20,7 @@ class BttnModel extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff314F6B)),
