@@ -1,36 +1,35 @@
-import 'package:chat/feature/login/presentation/logic/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../constans.dart';
-import '../widget/button_widget.dart';
-import '../widget/not_have_account_widget.dart';
-import '../widget/show_dialog.dart';
-import '../widget/show_dialog_loading.dart';
-import '../widget/text_widget.dart';
-import '../widget/textfild_widget.dart';
-import '../widget/logo_widget.dart';
+import '../../../../core/constrain.dart';
+import '../../../../core/widget/show_dialog.dart';
+import '../../../../core/widget/show_dialog_loading.dart';
+import '../../../../core/widget/button_widget.dart';
+import '../../../../core/widget/logo_widget.dart';
+import '../../../../core/widget/text_widget.dart';
+import '../../../../core/widget/text_field_widget.dart';
+import '../logic/register_cubit.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KPrimaryColor,
       body: BlocProvider(
-        create: (context) => LoginCubit(),
+        create: (context) => RegisterCubit(),
         child: Builder(builder: (context) {
-          return BlocListener<LoginCubit, LoginState>(
+          return BlocListener<RegisterCubit, RegisterState>(
               listener: (context, state) {
-                if (state is LoginLoading) {
+                if (state is RegisterLoading) {
                   showDialogLoading(context);
                 }
-                if (state is LoginError) {
+                if (state is RegisterError) {
                   Navigator.pop(context);
                   showDialogText(context: context,msg:"${state.msg}" );
 
                 }
-                if (state is LoginSucceed) {
+                if (state is RegisterSucceed) {
                   Navigator.pushNamedAndRemoveUntil(
                       context, 'homePage', (route) => false);
                 }
@@ -45,37 +44,30 @@ class LoginScreen extends StatelessWidget {
                     Center(
                       child: TextWidget(
                           fontSize: 30,
-                          title: 'Login',
+                          title: 'Register',
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
                     const SizedBox(height: 25),
                     TextFormFieldWidget(
                       hintText: 'Email',
-                      controller: LoginCubit.get(context).email,
+                      controller: RegisterCubit.get(context).email,
                     ),
                     const SizedBox(height: 20),
                     TextFormFieldWidget(
                       hintText: 'Password',
                       obscureText: true,
-                      controller: LoginCubit.get(context).password,
+                      controller: RegisterCubit.get(context).password,
                     ),
                     const SizedBox(height: 25),
-                    InkWell(
-                      onTap: () {
-                      },
-                      child: BtnWidget(onTap: (){
-                        print("object");
-                        BlocProvider.of<LoginCubit>(context).login();
+                    BtnWidget(
+                      onTap: (){
+                      BlocProvider.of<RegisterCubit>(context).register();
 
-                      },
-                        text: 'Login',
-                      ),
-
+                    },
+                      text: 'Register',
                     ),
                     const SizedBox(height: 25),
-                    const NotHaveAccountWidget(),
-
                   ],
                 ),
               ));

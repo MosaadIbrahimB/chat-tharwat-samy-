@@ -1,4 +1,4 @@
-import 'package:chat/feature/login/presentation/widget/text_widget.dart';
+import 'package:chat/core/widget/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class BtnWidget extends StatelessWidget {

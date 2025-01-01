@@ -1,7 +1,7 @@
-import 'package:chat/view/homeView.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'feature/login/presentation/screen/login_screen.dart';
+import 'feature/register/presentation/screen/register_screen.dart';
 import 'firebase_options.dart';
 
 
@@ -23,7 +23,7 @@ class ChatApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         'loginScreen':(context) => const LoginScreen(),
-        'homePage':(context)=>HomePage(),
+        'registerScreen':(context) => const RegisterScreen(),
       },
       initialRoute: "loginScreen",
     );

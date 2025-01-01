@@ -20,9 +20,9 @@ class RegisterFirebaseDataSourceImp implements RegisterRemoteDataSource {
       return right(user);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
-        case "e.code == 'weak-password'":
+        case  'weak-password':
           return left(NetWorkError(msg: "The password provided is too weak"));
-        case "e.code == 'email-already-in-use'":
+        case  'email-already-in-use':
           return left(NetWorkError(msg: "The account already exists for that email"));
         default:
           return left(NetWorkError(msg: "Unknown error."));

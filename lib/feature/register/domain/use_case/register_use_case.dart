@@ -1,15 +1,15 @@
-import 'package:chat/feature/login/domain/repository/login_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/api/error/error.dart';
+import '../repository/register_repository.dart';
 
-class LoginUseCase{
-  LoginRepository loginRepository;
+class RegisterUseCase{
+  RegisterRepository registerRepository;
 
-  LoginUseCase(this.loginRepository);
+  RegisterUseCase(this.registerRepository);
   Future<Either<NetWorkError, UserCredential>> call({required String email, required String password})async{
-   return await loginRepository.login(email:email ,password: password);
+   return await registerRepository.register(email:email ,password: password);
   }
 
 }

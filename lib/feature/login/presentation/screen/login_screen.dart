@@ -1,14 +1,14 @@
 import 'package:chat/feature/login/presentation/logic/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../constans.dart';
-import '../widget/button_widget.dart';
+import '../../../../core/constrain.dart';
+import '../../../../core/widget/show_dialog.dart';
+import '../../../../core/widget/show_dialog_loading.dart';
+import '../../../../core/widget/button_widget.dart';
 import '../widget/not_have_account_widget.dart';
-import '../widget/show_dialog.dart';
-import '../widget/show_dialog_loading.dart';
-import '../widget/text_widget.dart';
-import '../widget/textfild_widget.dart';
-import '../widget/logo_widget.dart';
+import '../../../../core/widget/text_widget.dart';
+import '../../../../core/widget/text_field_widget.dart';
+import '../../../../core/widget/logo_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
