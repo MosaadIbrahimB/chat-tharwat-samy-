@@ -62,6 +62,7 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(height: 25),
                     BtnWidget(
                       onTap: (){
+                        print("reg");
                       BlocProvider.of<RegisterCubit>(context).register();
 
                     },

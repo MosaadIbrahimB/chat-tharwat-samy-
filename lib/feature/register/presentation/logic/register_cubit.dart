@@ -19,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   TextEditingController password = TextEditingController();
 
   RegisterCubit() : super(RegisterInitial()) {
-    registerRemoteDataSource = RegisterFirebaseDataSourceImp();
+    registerRemoteDataSource = RegisterFirebaseDataSourceImp(auth: FirebaseAuth.instance);
     registerRepository = RegisterRepositoryImp(registerRemoteDataSource);
     registerUseCase = RegisterUseCase(registerRepository);
   }
@@ -28,8 +28,8 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   register() async {
     emit(RegisterLoading());
-    var response =
-        await registerUseCase.call(email: email.text, password: password.text);
+    var response = await registerUseCase.call(email: "abxzzas@gmail.com", password: "123456");
+
     response.fold(
       (error) {
         emit(RegisterError(msg: error.msg));
