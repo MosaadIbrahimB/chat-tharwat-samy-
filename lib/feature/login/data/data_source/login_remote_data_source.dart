@@ -1,8 +1,7 @@
-import 'package:chat/core/api/error/error.dart';
+import 'package:chat/core/network/error/error.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/api/error/firebase_control.dart';
 
 
 abstract class LoginRemoteDataSource {

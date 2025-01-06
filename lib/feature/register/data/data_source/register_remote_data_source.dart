@@ -1,4 +1,5 @@
-import 'package:chat/core/api/error/error.dart';
+import 'package:chat/core/network/error/error.dart';
+import 'package:chat/core/network/error/firebase_control.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -16,8 +17,14 @@ class RegisterFirebaseDataSourceImp implements RegisterRemoteDataSource {
   @override
   Future<Either<NetWorkError, UserCredential>> register({required String email, required String password}) async {
 
+ return await   FireBaseControl.register(auth: auth, email: email, password: password);
+
+
+
+
     try {
       UserCredential userCredential=await auth.createUserWithEmailAndPassword(email: email, password: password);
+
       return right(userCredential);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {

@@ -1,7 +1,7 @@
+import 'package:chat/feature/home/presentation/screen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'core/api/error/firebase_control.dart';
 import 'feature/login/presentation/screen/login_screen.dart';
 import 'feature/register/presentation/screen/register_screen.dart';
 import 'firebase_options.dart';
@@ -26,9 +26,10 @@ class ChatApp extends StatelessWidget {
       routes: {
         'loginScreen':(context) => const LoginScreen(),
         'registerScreen':(context) => const RegisterScreen(),
+        'homeScreen':(context) => const HomeScreen(),
         't':(context) => const T(),
       },
-      initialRoute: "registerScreen",
+      initialRoute: "homeScreen",
     );
   }
 }

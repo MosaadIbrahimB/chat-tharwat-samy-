@@ -2,7 +2,7 @@ import 'package:chat/feature/login/domain/repository/login_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/api/error/error.dart';
+import 'package:chat/core/network/error/error.dart';
 
 class LoginUseCase{
   LoginRepository loginRepository;

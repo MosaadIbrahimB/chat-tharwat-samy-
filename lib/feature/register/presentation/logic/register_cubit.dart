@@ -28,7 +28,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   register() async {
     emit(RegisterLoading());
-    var response = await registerUseCase.call(email: "abxzzas@gmail.com", password: "123456");
+    var response = await registerUseCase.call(email: email.text, password: password.text);
 
     response.fold(
       (error) {
