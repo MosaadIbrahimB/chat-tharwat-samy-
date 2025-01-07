@@ -1,5 +1,5 @@
 import 'package:chat/core/network/error/error.dart';
-import 'package:chat/core/network/error/firebase_control.dart';
+import 'package:chat/core/network/firebase/firebase_control.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

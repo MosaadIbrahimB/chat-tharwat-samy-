@@ -1,3 +1,4 @@
+import 'package:chat/core/route/screen_name.dart';
 import 'package:chat/core/widget/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class NotHaveAccountWidget extends StatelessWidget {
             title: 'Don\'t have an account', color: Colors.white, fontSize: 18),
         InkWell(
             onTap: () {
-              Navigator.pushNamed(context, 'registerScreen');
+              Navigator.pushNamed(context, ScreenName.register);
             },
             child: TextWidget(
               title: ' Register',

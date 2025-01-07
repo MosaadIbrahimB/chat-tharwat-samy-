@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constrain.dart';
+import '../../../../core/network/firebase/firebase_control.dart';
 import '../widget/app_bar_widget.dart';
 import '../widget/chat_send_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
+   HomeScreen({super.key});
+  TextEditingController? controller =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +23,15 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             TextField(
+              controller: controller,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)),
                   suffixIcon: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print("object");
+                        FireBaseControl.addMessage(uid: "55",msg: controller!.text??"",dateTime: DateTime.now());
+                      },
                       icon: const Icon(
                         Icons.send,
                         color: KPrimaryColor,
