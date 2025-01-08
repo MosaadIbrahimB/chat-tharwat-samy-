@@ -1,24 +1,22 @@
+import 'package:chat/feature/home/presentation/logic/btn_cubit.dart';
 import 'package:chat/feature/home/presentation/logic/home_cubit.dart';
 import 'package:chat/feature/login/presentation/screen/export.dart';
-import 'package:flutter/material.dart';
 
 class TextFormWidget extends StatelessWidget {
-  const TextFormWidget({
+   TextFormWidget({
     super.key,
   });
-
+  // bool btnColor = false;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-      bool btnColor = false;
-      if (state is ChangBtnState) {
-        btnColor = state.color;
-      }
+    return BlocBuilder<BtnCubit, bool>(
+
+        builder: (context, state) {
       return TextField(
         controller: HomeCubit.get(context).controller,
         onChanged: (value) {
-          BlocProvider.of<HomeCubit>(context).changeBtnColor(value);
+          BlocProvider.of<BtnCubit>(context).changeBtnColor(value);
         },
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -26,10 +24,11 @@ class TextFormWidget extends StatelessWidget {
                 onPressed: () {
                   HomeCubit.get(context).addMessage();
                   HomeCubit.get(context).controller!.clear();
+                  BlocProvider.of<BtnCubit>(context).changeBtnColor("");
                 },
                 icon: Icon(
                   Icons.send,
-                  color: btnColor ? Colors.orange : KPrimaryColor,
+                  color: state ? Colors.orange : KPrimaryColor,
                 ))),
       );
     });
