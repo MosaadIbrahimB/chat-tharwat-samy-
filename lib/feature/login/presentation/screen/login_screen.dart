@@ -1,3 +1,5 @@
+import 'package:chat/core/route/screen_name.dart';
+
 import 'export.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -21,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                 }
                 if (state is LoginSucceed) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, 'homeScreen', (route) => false);
+                      context, ScreenName.home, (route) => false);
                 }
               },
               child: SingleChildScrollView(

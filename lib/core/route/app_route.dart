@@ -3,7 +3,7 @@ import 'package:chat/feature/home/presentation/screen/home_screen.dart';
 import 'package:chat/feature/login/presentation/screen/login_screen.dart';
 import 'package:chat/feature/register/presentation/screen/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'default_screen.dart';
+import '../widget/default_screen.dart';
 
 
 class AppRoute{

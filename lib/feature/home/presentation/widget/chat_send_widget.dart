@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constrain.dart';
+import '../../../../core/utils/constrain.dart';
 class ChatSendWidget extends StatelessWidget {
+  final String title;
   const ChatSendWidget({
-    super.key,
+    super.key, required this.title,
   });
 
   @override
@@ -20,9 +21,9 @@ class ChatSendWidget extends StatelessWidget {
               topRight: Radius.circular(16),
               bottomRight: Radius.circular(16),
             )),
-        child: const Text(
-          "Hello world",
-          style: TextStyle(color: Colors.white),
+        child:  Text(
+          title,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

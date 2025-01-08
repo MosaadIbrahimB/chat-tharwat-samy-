@@ -1,6 +1,7 @@
+import 'package:chat/core/route/screen_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/constrain.dart';
+import '../../../../core/utils/constrain.dart';
 import '../../../../core/widget/show_dialog.dart';
 import '../../../../core/widget/show_dialog_loading.dart';
 import '../../../../core/widget/button_widget.dart';
@@ -31,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
                 }
                 if (state is RegisterSucceed) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, 'homeScreen', (route) => false);
+                      context, ScreenName.home, (route) => false);
                 }
               },
               child: SingleChildScrollView(

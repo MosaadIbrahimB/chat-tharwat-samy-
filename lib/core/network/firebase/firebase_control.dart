@@ -6,8 +6,6 @@ import 'message_model.dart';
 import 'user_model.dart';
 import '../error/error.dart';
 
-
-
 class FireBaseControl {
   static String? _userId;
 
@@ -19,11 +17,10 @@ class FireBaseControl {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      UserModel userModel =
-          UserModel(name: email, uid: userCredential.user!.uid);
-      addUser(userModel);
+      // UserModel userModel =
+      // UserModel(name: email, uid: userCredential.user!.uid);
+      // addUser(userModel);
       _userId = userCredential.user!.uid;
-
       return right(userCredential);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
@@ -57,7 +54,7 @@ class FireBaseControl {
         case "invalid-email":
           return left(NetWorkError(msg: "Not a valid email address."));
         default:
-          return left(NetWorkError(msg: "Unknown error."));
+          return left(NetWorkError(msg: "Unknown error.${exception.message}"));
       }
     } catch (e) {
       return left(NetWorkError(msg: "Error Server"));
@@ -87,6 +84,7 @@ class FireBaseControl {
 
   /// ADD USER COLLECTION
   static Future<void> addUser(UserModel user) {
+
     var folderTask = _userRef(); //folder name task
     var fileDoc = folderTask.doc(); //fileName doc
     // user.uid = fileDoc.id; //number file
@@ -95,14 +93,24 @@ class FireBaseControl {
   }
 
   /// ADD USER COLLECTION ADD MESSAGE COLLECTION
-  static Future<void> addMessage(
-      {required String uid, required String msg, required DateTime dateTime}) {
-    var folderTask = _messageRef(); //folder name task
-    var fileDoc = folderTask.doc(); //fileName doc
-    // user.uid = fileDoc.id; //number file
-    return fileDoc.set(MessageModel(
-        uid: _userId ?? "123",
-        textMsg: msg,
-        dateTime: dateTime)); //write all data in file from obj tas;
+  static Future<Either<NetWorkError,MessageModel>> addMessage(
+      { required String msg, required DateTime dateTime})
+ async {
+    try {
+      var folderTask = _messageRef(); //folder name task
+      var fileDoc = folderTask.doc();
+      MessageModel messageModel=  MessageModel(uid: _userId ?? "123", textMsg: msg, dateTime: dateTime);
+      await fileDoc.set( messageModel);
+      return right(messageModel);
+    } on Exception catch (e) {
+      return left(NetWorkError(msg: "Error Server $e"));
+    }
+//write all data in file from obj tas;
+  }
+
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>>  getMessage()async*{
+   yield*  FirebaseFirestore.instance.collection('message').snapshots();
+
   }
 }
