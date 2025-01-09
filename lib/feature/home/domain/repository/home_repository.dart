@@ -6,4 +6,7 @@ abstract class HomeRepository {
 
   Future<Either<NetWorkError,MessageModel>> addMessage(
       { required String msg});
+
+  Future<Either<NetWorkError, String>> deleteMessage(int index) ;
+
 }

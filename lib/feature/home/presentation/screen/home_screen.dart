@@ -6,7 +6,6 @@ import 'package:chat/feature/home/presentation/widget/app_bar_widget.dart';
 import 'package:chat/feature/home/presentation/widget/chat_send_widget.dart';
 import 'package:chat/feature/home/presentation/widget/text_form_widget.dart';
 import 'package:chat/feature/login/presentation/screen/export.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -35,20 +34,11 @@ class HomeScreen extends StatelessWidget {
                       List<MessageModel> list = state.listMessage ?? [];
                       return ListView.builder(
                         itemCount: list.length,
-                        itemBuilder: (context, index) => InkWell(
-                          onTap: ()async{
-
-                            CollectionReference message = FirebaseFirestore.instance.collection('message');
-                         await message.get().then((value) {
-                            print("${value.docs[index].id}-------------------------");
-                            message.doc(value.docs[index].id).delete() .then((value) => print("User Deleted"))
-                                .catchError((error) => print("Failed to delete user: $error"));
-                          },);
-
+                        itemBuilder: (context, index) => ChatSendWidget(
+                          title: list[index].textMsg,
+                          onDismissed: (){
+                            HomeCubit.get(context).deleteMessage(index);
                           },
-                          child: ChatSendWidget(
-                            title: list[index].textMsg,
-                          ),
                         ),
                       );
                     }

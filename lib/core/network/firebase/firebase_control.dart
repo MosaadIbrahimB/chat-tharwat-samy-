@@ -84,7 +84,6 @@ class FireBaseControl {
 
   /// ADD USER COLLECTION
   static Future<void> addUser(UserModel user) {
-
     var folderTask = _userRef(); //folder name task
     var fileDoc = folderTask.doc(); //fileName doc
     // user.uid = fileDoc.id; //number file
@@ -93,24 +92,33 @@ class FireBaseControl {
   }
 
   /// ADD USER COLLECTION ADD MESSAGE COLLECTION
-  static Future<Either<NetWorkError,MessageModel>> addMessage(
-      { required String msg, required DateTime dateTime})
- async {
+  static Future<Either<NetWorkError, MessageModel>> addMessage(
+      {required String msg, required DateTime dateTime}) async {
     try {
       var folderTask = _messageRef(); //folder name task
       var fileDoc = folderTask.doc();
-      MessageModel messageModel=  MessageModel(uid: _userId ?? "123", textMsg: msg, dateTime: dateTime);
-      await fileDoc.set( messageModel);
+      MessageModel messageModel =
+          MessageModel(uid: _userId ?? "123", textMsg: msg, dateTime: dateTime);
+      await fileDoc.set(messageModel);
       return right(messageModel);
     } on Exception catch (e) {
       return left(NetWorkError(msg: "Error Server $e"));
     }
-//write all data in file from obj tas;
   }
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMessage() {
+    return FirebaseFirestore.instance.collection('message').snapshots();
+  }
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>>  getMessage()async*{
-   yield*  FirebaseFirestore.instance.collection('message').snapshots();
-
+  static Future<Either<NetWorkError, String>> deleteMessage(int index) async {
+    CollectionReference message =
+        FirebaseFirestore.instance.collection('message');
+    try {
+      var value = await message.get();
+      await message.doc(value.docs[index].id).delete();
+      return right("User Deleted");
+    } catch (error) {
+      return left(NetWorkError(msg: "Failed to delete user: $error"));
+    }
   }
 }

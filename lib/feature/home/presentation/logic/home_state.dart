@@ -22,3 +22,13 @@ final List<MessageModel> listMessage;
 
  GetMessageSucceedState({required this.listMessage});
 }
+
+class DeleteMessageSucceedState extends HomeState {
+ String msg ;
+ DeleteMessageSucceedState(this.msg);
+
+}
+class DeleteMessageErrorState extends HomeState {
+ String msg ;
+ DeleteMessageErrorState(this.msg);
+}

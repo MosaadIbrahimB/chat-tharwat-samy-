@@ -13,4 +13,9 @@ class HomeRepositoryImp implements HomeRepository  {
   Future<Either<NetWorkError, MessageModel>> addMessage({required String msg}) async{
    return await homeRemoteDataSource.addMessage(msg: msg,);
   }
+
+  @override
+  Future<Either<NetWorkError, String>> deleteMessage(int index) async{
+    return await homeRemoteDataSource.deleteMessage(index);
+  }
 }
