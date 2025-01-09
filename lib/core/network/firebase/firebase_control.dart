@@ -9,6 +9,10 @@ import '../error/error.dart';
 class FireBaseControl {
   static String? _userId;
 
+  static getUserId(){
+    return _userId;
+  }
+
   ///REGISTER FUNCTION
   static Future<Either<NetWorkError, UserCredential>> register(
       {required FirebaseAuth auth,
@@ -106,15 +110,16 @@ class FireBaseControl {
     }
   }
 
+  /// Get Message
   static Stream<QuerySnapshot<Map<String, dynamic>>> getMessage() {
-    return FirebaseFirestore.instance.collection('message').snapshots();
+    return FirebaseFirestore.instance.collection('message').orderBy('dateTime').snapshots();
   }
 
   static Future<Either<NetWorkError, String>> deleteMessage(int index) async {
     CollectionReference message =
         FirebaseFirestore.instance.collection('message');
     try {
-      var value = await message.get();
+      var value = await message.orderBy('dateTime').get();
       await message.doc(value.docs[index].id).delete();
       return right("User Deleted");
     } catch (error) {

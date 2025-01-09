@@ -1,13 +1,15 @@
+import 'package:chat/core/route/screen_name.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/constrain.dart';
 
-class AppBarWidget extends StatelessWidget implements PreferredSizeWidget{
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  AppBar(
+    return AppBar(
       backgroundColor: KPrimaryColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,15 +17,29 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget{
           Image.asset("assets/images/scholar.png", height: 50),
           const Text(
             "Chat",
-            style:
-            TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          )
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              ScreenName.login,
+              (route) => false,
+            );
+          },
+          icon: const Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
+        )
+      ],
     );
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => const Size(1,60);
+  Size get preferredSize => const Size(1, 60);
 }
