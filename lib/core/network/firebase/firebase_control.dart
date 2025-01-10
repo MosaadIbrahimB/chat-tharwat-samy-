@@ -8,11 +8,14 @@ import '../error/error.dart';
 
 class FireBaseControl {
   static String? _userId;
+  static String? _email;
 
   static getUserId(){
     return _userId;
   }
-
+  static getEmail(){
+    return _email;
+  }
   ///REGISTER FUNCTION
   static Future<Either<NetWorkError, UserCredential>> register(
       {required FirebaseAuth auth,
@@ -21,9 +24,7 @@ class FireBaseControl {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // UserModel userModel =
-      // UserModel(name: email, uid: userCredential.user!.uid);
-      // addUser(userModel);
+      _email=email;
       _userId = userCredential.user!.uid;
       return right(userCredential);
     } on FirebaseAuthException catch (exception) {
@@ -52,6 +53,7 @@ class FireBaseControl {
       var user = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       _userId = user.user?.uid;
+      _email=email;
       return right(user);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
@@ -90,19 +92,18 @@ class FireBaseControl {
   static Future<void> addUser(UserModel user) {
     var folderTask = _userRef(); //folder name task
     var fileDoc = folderTask.doc(); //fileName doc
-    // user.uid = fileDoc.id; //number file
-    // user.uid = _userId??""; //number file
     return fileDoc.set(user); //write all data in file from obj tas;
   }
 
   /// ADD USER COLLECTION ADD MESSAGE COLLECTION
   static Future<Either<NetWorkError, MessageModel>> addMessage(
-      {required String msg, required DateTime dateTime}) async {
+      {required MessageModel messageModel}) async {
     try {
       var folderTask = _messageRef(); //folder name task
       var fileDoc = folderTask.doc();
-      MessageModel messageModel =
-          MessageModel(uid: _userId ?? "123", textMsg: msg, dateTime: dateTime);
+      messageModel.uid=_userId ?? "123";
+      messageModel.dateTime=DateTime.now();
+      messageModel.email=  getEmail();
       await fileDoc.set(messageModel);
       return right(messageModel);
     } on Exception catch (e) {
@@ -112,14 +113,14 @@ class FireBaseControl {
 
   /// Get Message
   static Stream<QuerySnapshot<Map<String, dynamic>>> getMessage() {
-    return FirebaseFirestore.instance.collection('message').orderBy('dateTime').snapshots();
+    return FirebaseFirestore.instance.collection('message').orderBy('dateTime',descending: true).snapshots();
   }
 
   static Future<Either<NetWorkError, String>> deleteMessage(int index) async {
     CollectionReference message =
         FirebaseFirestore.instance.collection('message');
     try {
-      var value = await message.orderBy('dateTime').get();
+      var value = await message.orderBy('dateTime',descending: true).get();
       await message.doc(value.docs[index].id).delete();
       return right("User Deleted");
     } catch (error) {

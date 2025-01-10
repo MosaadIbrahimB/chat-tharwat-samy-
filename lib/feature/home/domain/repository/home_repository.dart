@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract class HomeRepository {
 
   Future<Either<NetWorkError,MessageModel>> addMessage(
-      { required String msg});
+      { required MessageModel messageModel});
 
   Future<Either<NetWorkError, String>> deleteMessage(int index) ;
 

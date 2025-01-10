@@ -1,11 +1,20 @@
+import 'package:chat/feature/home/presentation/widget/user_email_and_text_msg_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/constrain.dart';
+import 'container_widget.dart';
+
 class ChatSendWidget extends StatelessWidget {
+  final String userEmail;
   final String title;
- final VoidCallback onDismissed;
+  final VoidCallback onDismissed;
+  final bool? friend;
+
   const ChatSendWidget({
-    super.key, required this.title, required this.onDismissed,
+    super.key,
+    required this.title,
+    required this.onDismissed,
+    required this.userEmail,
+    this.friend,
   });
 
   @override
@@ -15,32 +24,22 @@ class ChatSendWidget extends StatelessWidget {
       child: Dismissible(
         background: Container(
           decoration: BoxDecoration(
-          color: Colors.red,
-            borderRadius: BorderRadius.circular(8)
-          ),
-          child:const  Center(child:  Text("Delete",style: TextStyle(color: Colors.white),)),
+              color: Colors.red, borderRadius: BorderRadius.circular(8)),
+          child: const Center(
+              child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.white),
+          )),
         ),
         key: UniqueKey(),
         onDismissed: (DismissDirection direction) {
           onDismissed();
         },
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-                color: KPrimaryColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                )),
-            child:  Text(
-              textAlign: TextAlign.start,
-              title,
-              style: const TextStyle(color: Colors.white),
-            ),
+          padding: const EdgeInsets.only(left: 4.0, right: 4, bottom: 4),
+          child: ContainerWidget(
+            child:
+                UserEmailAndTextMsgWidget(userEmail: userEmail, title: title),
           ),
         ),
       ),

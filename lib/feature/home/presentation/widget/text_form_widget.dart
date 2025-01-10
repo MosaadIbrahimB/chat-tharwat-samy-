@@ -23,6 +23,7 @@ class TextFormWidget extends StatelessWidget {
             suffixIcon: IconButton(
                 onPressed: () {
                   HomeCubit.get(context).addMessage();
+                  HomeCubit.get(context).scrollToEnd();
                   HomeCubit.get(context).controller!.clear();
                   BlocProvider.of<BtnCubit>(context).changeBtnColor("");
                 },

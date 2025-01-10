@@ -32,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
                 }
                 if (state is RegisterSucceed) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, ScreenName.home, (route) => false);
+                      context, AppNameScreen.home, (route) => false);
                 }
               },
               child: SingleChildScrollView(

@@ -1,23 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  final String uid;
+  String? uid;
+   String? email;
   final String textMsg;
-  final DateTime dateTime;
+   DateTime? dateTime;
 
   MessageModel(
-      {required this.uid, required this.textMsg, required this.dateTime});
+      { this.email,
+      this.uid,
+      required this.textMsg,
+       this.dateTime
+      });
 
   MessageModel.fromJson(json)
       : this(
           uid: json['uid'],
+          email: json['email'],
           textMsg: json['textMsg'],
-          dateTime:(json['dateTime'] as Timestamp).toDate() ,
+          dateTime: (json['dateTime'] as Timestamp).toDate(),
         );
 
   toJson() {
     return {
       'uid': uid,
+      'email': email,
       'textMsg': textMsg,
       'dateTime': dateTime,
     };

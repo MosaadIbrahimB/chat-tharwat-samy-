@@ -14,7 +14,7 @@ class NotHaveAccountWidget extends StatelessWidget {
             title: 'Don\'t have an account', color: Colors.white, fontSize: 18),
         InkWell(
             onTap: () {
-              Navigator.pushNamed(context, ScreenName.register);
+              Navigator.pushNamed(context, AppNameScreen.register);
             },
             child: TextWidget(
               title: ' Register',

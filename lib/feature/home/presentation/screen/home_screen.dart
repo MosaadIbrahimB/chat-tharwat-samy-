@@ -34,27 +34,27 @@ class HomeScreen extends StatelessWidget {
                   builder: (context, state) {
                     if (state is AddMessageSucceedState) {
                       List<MessageModel> list = state.listMessage ?? [];
+
                       return ListView.builder(
+                        reverse: true,
+                        controller: HomeCubit.get(context).controllerScroll,
                         itemCount: list.length,
-                        itemBuilder: (context, index) => list[index].uid ==
-                                FireBaseControl.getUserId()
-                            ? ChatSendWidget(
-                                title: list[index].textMsg,
-                                onDismissed: () {
-                                  if (list[index].uid ==
-                                      FireBaseControl.getUserId()) {
-                                    HomeCubit.get(context).deleteMessage(index);
-                                  }
-                                },
-                              )
-                            : ChatFriendWidget(
-                                title: list[index].textMsg,
-                                onDismissed: () {
-                                  if (list[index].uid ==
-                                      FireBaseControl.getUserId()) {
-                                    HomeCubit.get(context).deleteMessage(index);
-                                  }                                },
-                              ),
+                        itemBuilder: (context, index) {
+                          bool user =
+                              list[index].uid == FireBaseControl.getUserId();
+                          return user
+                              ? ChatSendWidget(
+                                  userEmail: list[index].email ?? "",
+                                  title: list[index].textMsg,
+                                  onDismissed: () {
+                                    onDismissed(user, context, index);
+                                  },
+                                )
+                              : ChatFriendWidget(
+                                  userEmail:  list[index].email??"email",
+                                  title: list[index].textMsg,
+                                );
+                        },
                       );
                     }
                     return const SizedBox();
@@ -67,5 +67,11 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  onDismissed(bool user, BuildContext context, int index) {
+    if (user) {
+      HomeCubit.get(context).deleteMessage(index);
+    }
   }
 }

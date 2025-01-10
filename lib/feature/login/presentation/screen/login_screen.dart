@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                 }
                 if (state is LoginSucceed) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, ScreenName.home, (route) => false);
+                      context, AppNameScreen.home, (route) => false);
                 }
               },
               child: SingleChildScrollView(

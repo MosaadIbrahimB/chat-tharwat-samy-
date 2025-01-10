@@ -16,10 +16,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
   TextEditingController? controller = TextEditingController();
-
+  ScrollController? controllerScroll=ScrollController();
   addMessage() async {
     if(controller!.text.isEmpty)return;
-    var res = await addMessageUseCase(msg: controller!.text ?? "");
+    MessageModel messageModel=MessageModel( textMsg: controller!.text);
+    var res = await addMessageUseCase(messageModel:messageModel );
     res.fold(
       (error) {
         emit(AddMessageErrorState());
@@ -66,6 +67,15 @@ class HomeCubit extends Cubit<HomeState> {
             event.docs.map((e) => MessageModel.fromJson(e)).toList();
         emit(AddMessageSucceedState(listMessage: list));
       },
+    );
+  }
+
+  void scrollToEnd() {
+    controllerScroll?.animateTo(
+      // controllerScroll!.position.maxScrollExtent,
+      0,
+      duration: const Duration(milliseconds:500),
+      curve: Curves.easeIn,
     );
   }
 }

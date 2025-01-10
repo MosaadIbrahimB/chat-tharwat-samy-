@@ -10,7 +10,7 @@ class AddMessageUseCase {
   AddMessageUseCase(this.homeRepository);
 
   Future<Either<NetWorkError, MessageModel>> call(
-      {required String msg}) async {
-    return homeRepository.addMessage(msg: msg);
+      {required MessageModel messageModel}) async {
+    return homeRepository.addMessage(messageModel: messageModel);
   }
 }

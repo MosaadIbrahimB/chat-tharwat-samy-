@@ -27,7 +27,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             FirebaseAuth.instance.signOut();
             Navigator.pushNamedAndRemoveUntil(
               context,
-              ScreenName.login,
+              AppNameScreen.login,
               (route) => false,
             );
           },

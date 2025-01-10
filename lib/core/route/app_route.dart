@@ -12,9 +12,9 @@ class AppRoute{
 
 
     switch(routeSettings.name){
-      case ScreenName.register:return MaterialPageRoute(builder: (context) => const RegisterScreen());
-      case ScreenName.login:return MaterialPageRoute(builder: (context) => const LoginScreen());
-      case ScreenName.home:return MaterialPageRoute(builder: (context) => HomeScreen());
+      case AppNameScreen.register:return MaterialPageRoute(builder: (context) => const RegisterScreen());
+      case AppNameScreen.login:return MaterialPageRoute(builder: (context) => const LoginScreen());
+      case AppNameScreen.home:return MaterialPageRoute(builder: (context) => HomeScreen());
       default:return MaterialPageRoute(builder: (context) => const DefaultScreen());
     }
   }
