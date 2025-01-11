@@ -14,6 +14,13 @@ class TextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
+      validator: (value){
+        if(value=="") {
+          return "input anything";
+        }
+        return null;
+      },
       controller: controller,
       obscureText: obscureText,
       style: const TextStyle(
@@ -21,6 +28,7 @@ class TextFormFieldWidget extends StatelessWidget {
         fontSize: 24,
       ),
       decoration: InputDecoration(
+      errorStyle: const TextStyle(color: Colors.white),
         labelText: " $hintText ",
         labelStyle: const TextStyle(
           color: Colors.white,
@@ -39,7 +47,20 @@ class TextFormFieldWidget extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(10),
         ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(10),
+        ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(10),
+      )
       ),
+
     );
   }
 }

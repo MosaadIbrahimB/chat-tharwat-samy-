@@ -38,10 +38,10 @@ class FireBaseControl {
           return left(NetWorkError(msg: "The email address is invalid"));
         default:
           return left(
-              NetWorkError(msg: "Unknown Firebase error: ${exception.code}"));
+              NetWorkError(msg: "Unknown Firebase error:"));
       }
     } catch (e) {
-      return left(NetWorkError(msg: "Error Server${e.toString()}"));
+      return left(NetWorkError(msg: "Error Server"));
     }
   }
 
@@ -60,7 +60,7 @@ class FireBaseControl {
         case "invalid-email":
           return left(NetWorkError(msg: "Not a valid email address."));
         default:
-          return left(NetWorkError(msg: "Unknown error.${exception.message}"));
+          return left(NetWorkError(msg: "Unknown error."));
       }
     } catch (e) {
       return left(NetWorkError(msg: "Error Server"));

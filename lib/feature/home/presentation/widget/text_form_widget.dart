@@ -13,7 +13,8 @@ class TextFormWidget extends StatelessWidget {
     return BlocBuilder<BtnCubit, bool>(
 
         builder: (context, state) {
-      return TextField(
+      return TextFormField(
+
         controller: HomeCubit.get(context).controller,
         onChanged: (value) {
           BlocProvider.of<BtnCubit>(context).changeBtnColor(value);

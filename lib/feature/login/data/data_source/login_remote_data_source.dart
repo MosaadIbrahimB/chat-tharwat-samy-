@@ -18,22 +18,6 @@ class LoginFirebaseDataSourceImp implements LoginRemoteDataSource {
 
    return await FireBaseControl.login(email: email, password: password);
 
-    try {
-      FirebaseAuth auth=FirebaseAuth.instance;
-      var user=await auth.signInWithEmailAndPassword(
-          email: email, password: password);
 
-      return right(user);
-    } on FirebaseAuthException catch (exception) {
-      switch (exception.code) {
-        case "invalid-email":
-          return left(NetWorkError(msg: "Not a valid email address."));
-        default:
-          return left(NetWorkError(msg: "Unknown error."));
-      }
-    }catch (e){
-      return left(NetWorkError(msg: "Error Server"));
-
-    }
   }
 }

@@ -9,3 +9,5 @@ export '../widget/not_have_account_widget.dart';
 export '../../../../core/widget/text_widget.dart';
 export '../../../../core/widget/text_field_widget.dart';
 export '../../../../core/widget/logo_widget.dart';
+export 'package:chat/core/ingect/get_it_control.dart';
+export 'package:chat/core/route/screen_name.dart';
