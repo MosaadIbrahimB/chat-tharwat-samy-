@@ -11,22 +11,17 @@ import '../../domain/use_case/register_use_case.dart';
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  late RegisterRemoteDataSource registerRemoteDataSource;
-  late RegisterRepository registerRepository;
-  late RegisterUseCase registerUseCase;
-
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-
-  RegisterCubit() : super(RegisterInitial()) {
-    registerRemoteDataSource = RegisterFirebaseDataSourceImp(auth: FirebaseAuth.instance);
-    registerRepository = RegisterRepositoryImp(registerRemoteDataSource);
-    registerUseCase = RegisterUseCase(registerRepository);
-  }
+   RegisterUseCase registerUseCase;
+  RegisterCubit(this.registerUseCase) : super(RegisterInitial()) ;
 
   static RegisterCubit get(BuildContext context) => BlocProvider.of(context);
 
-  register() async {
+   TextEditingController email = TextEditingController();
+   TextEditingController password = TextEditingController();
+   var key=GlobalKey<FormState>();
+
+   register() async {
+     if(!key.currentState!.validate())return;
     emit(RegisterLoading());
     var response = await registerUseCase.call(email: email.text, password: password.text);
 

@@ -10,21 +10,20 @@ class FireBaseControl {
   static String? _userId;
   static String? _email;
 
-  static getUserId(){
+  static getUserId() {
     return _userId;
   }
-  static getEmail(){
+
+  static getEmail() {
     return _email;
   }
+
   ///REGISTER FUNCTION
-  static Future<Either<NetWorkError, UserCredential>> register(
-      {required FirebaseAuth auth,
-      required String email,
-      required String password}) async {
+  static Future<Either<NetWorkError, UserCredential>> register({ required String email, required String password}) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email, password: password);
-      _email=email;
+      _email = email;
       _userId = userCredential.user!.uid;
       return right(userCredential);
     } on FirebaseAuthException catch (exception) {
@@ -37,8 +36,7 @@ class FireBaseControl {
         case 'invalid-email':
           return left(NetWorkError(msg: "The email address is invalid"));
         default:
-          return left(
-              NetWorkError(msg: "Unknown Firebase error:"));
+          return left(NetWorkError(msg: "Unknown Firebase error:"));
       }
     } catch (e) {
       return left(NetWorkError(msg: "Error Server"));
@@ -53,7 +51,7 @@ class FireBaseControl {
       var user = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       _userId = user.user?.uid;
-      _email=email;
+      _email = email;
       return right(user);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
@@ -101,9 +99,9 @@ class FireBaseControl {
     try {
       var folderTask = _messageRef(); //folder name task
       var fileDoc = folderTask.doc();
-      messageModel.uid=_userId ?? "123";
-      messageModel.dateTime=DateTime.now();
-      messageModel.email=  getEmail();
+      messageModel.uid = _userId ?? "123";
+      messageModel.dateTime = DateTime.now();
+      messageModel.email = getEmail();
       await fileDoc.set(messageModel);
       return right(messageModel);
     } on Exception catch (e) {
@@ -113,14 +111,17 @@ class FireBaseControl {
 
   /// Get Message
   static Stream<QuerySnapshot<Map<String, dynamic>>> getMessage() {
-    return FirebaseFirestore.instance.collection('message').orderBy('dateTime',descending: true).snapshots();
+    return FirebaseFirestore.instance
+        .collection('message')
+        .orderBy('dateTime', descending: true)
+        .snapshots();
   }
 
   static Future<Either<NetWorkError, String>> deleteMessage(int index) async {
     CollectionReference message =
         FirebaseFirestore.instance.collection('message');
     try {
-      var value = await message.orderBy('dateTime',descending: true).get();
+      var value = await message.orderBy('dateTime', descending: true).get();
       await message.doc(value.docs[index].id).delete();
       return right("User Deleted");
     } catch (error) {
